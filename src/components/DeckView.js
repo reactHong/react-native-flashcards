@@ -18,15 +18,14 @@ const DetailText = styled.Text`
   text-align: center;
 `;
 
-const push = (navigation) => {
-  navigation.push('DeckDetailView');
-};
+function DeckView({ deck, navigation }) {
 
-function DeckView({ navigation }) {
+  const { title, questions } = deck;
+
   return(
-    <ContainerView onPress={() => push(navigation)}>
-      <TitleText>Deck 1</TitleText>
-      <DetailText>3 cards</DetailText>
+    <ContainerView onPress={() => navigation.push('DeckDetailView')}>
+      <TitleText>{title}</TitleText>
+      <DetailText>{questions.length} cards</DetailText>
     </ContainerView>
   );
 }

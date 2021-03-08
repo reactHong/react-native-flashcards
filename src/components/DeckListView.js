@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import DeckView from './DeckView';
 
@@ -9,18 +10,20 @@ const ListView = styled.View`
   background-color: yellow;
 `;
 
-function DeckListView({ navigation }) {
-
-  console.log(navigation);
-
-  const cards = new Array(10).fill(0);
-
+function DeckListView({ decks, navigation }) {
+  
   //TODO: enable ScrollView
+
+  const decksArray = Object.values(decks);
 
   return(
     <ListView>
-      {cards.map((card, index) => (
-        <DeckView key={index} navigation={navigation} />
+      {decksArray.map((deck, index) => (
+        <DeckView 
+          key={index} 
+          navigation={navigation} 
+          deck={deck}
+        />
       ))}
     </ListView>
   );
@@ -30,4 +33,9 @@ const styles = StyleSheet.create({
   
 });
 
-export default DeckListView;
+const mapStateToProps = ({ decks }, { navigation }) => ({
+  decks,
+  navigation: navigation,
+});
+
+export default connect(mapStateToProps)(DeckListView);

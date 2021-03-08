@@ -1,14 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack';
-import DeckListView from './components/DeckListView';
-import DeckDetailView from './components/DeckDetailView';
-import AddCardView from './components/AddCardView';
-import AddDeckView from './components/AddDeckView';
-import QuizView from './components/QuizView';
+import DeckListView from './DeckListView';
+import DeckDetailView from './DeckDetailView';
+import AddCardView from './AddCardView';
+import AddDeckView from './AddDeckView';
+import QuizView from './QuizView';
+import { getDecks } from '../_DATA';
+import { receiveData } from '../actions/shared';
 
 const Tab = createBottomTabNavigator();
 const DecksStack = createStackNavigator();
@@ -52,7 +55,20 @@ const Stack2 = () => {
   );
 }
 
-export default function App() {
+function Main(props) {
+  const { dispatch } = props;
+
+  useEffect(() => {
+    console.log("### [Main.useEffect]");
+    getDecks()
+      .then(decks => {
+        console.log("### [App.useEffect] decks:", decks);
+        dispatch(receiveData(decks));
+      });
+  }, []);
+
+  console.log("### [Main.render]");
+
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
@@ -71,3 +87,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#0ff',
   },
 });
+
+export default connect()(Main);
