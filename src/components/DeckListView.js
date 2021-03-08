@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import DeckView from './DeckView';
@@ -12,19 +12,22 @@ const ListView = styled.View`
 
 function DeckListView({ decks, navigation }) {
   
-  //TODO: enable ScrollView
+  const data = Object.entries(decks);
 
-  const decksArray = Object.values(decks);
+  const renderItem = ({ item }) => (
+    <DeckView 
+      navigation={navigation} 
+      deck={item[1]}
+    />
+  );
 
   return(
     <ListView>
-      {decksArray.map((deck, index) => (
-        <DeckView 
-          key={index} 
-          navigation={navigation} 
-          deck={deck}
-        />
-      ))}
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item[0]}
+      />
     </ListView>
   );
 }
