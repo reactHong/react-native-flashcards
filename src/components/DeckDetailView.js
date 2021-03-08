@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
 import styled from 'styled-components';
-import DeckListView from './DeckListView';
 import TextButton from './TextButton'
 
 const ContainerView = styled.View`
@@ -29,8 +27,7 @@ const BottomView = styled.View`
   align-items: center;
 `;
 
-function DeckDetailView() {
-
+function DeckDetailView({ navigation }) {
   return (
     <ContainerView>
       <TopView>
@@ -41,14 +38,17 @@ function DeckDetailView() {
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonAddCard]}
           textStyle={[styles.textCommon, styles.textAddCard]}
+          onPress={() => navigation.push("AddCardView")}
         >Add Card</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonStartQuiz]}
           textStyle={[styles.textCommon, styles.textStartQuiz]}
+          onPress={() => navigation.push("QuizView")}
         >Start Quiz</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonDelDeck]}
           textStyle={[styles.textCommon, styles.textDelDeck]}
+          onPress={() => navigation.goBack()}
         >Delete Deck</TextButton>
       </BottomView>
     </ContainerView>

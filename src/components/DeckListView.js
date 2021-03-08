@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import styled from 'styled-components';
 import DeckView from './DeckView';
 
@@ -9,7 +9,9 @@ const ListView = styled.View`
   background-color: yellow;
 `;
 
-function DeckListView() {
+function DeckListView({ navigation }) {
+
+  console.log(navigation);
 
   const cards = new Array(10).fill(0);
 
@@ -17,7 +19,9 @@ function DeckListView() {
 
   return(
     <ListView>
-      {cards.map((card, index) => <DeckView key={index} />)}
+      {cards.map((card, index) => (
+        <DeckView key={index} navigation={navigation} />
+      ))}
     </ListView>
   );
 }

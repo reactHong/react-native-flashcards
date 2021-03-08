@@ -33,7 +33,7 @@ const BottomView = styled.View`
   align-items: center;
 `;
 
-function AddDeckView() {
+function AddDeckView({ navigation }) {
   return (
     <ContainerView>
       <TopView>
@@ -44,6 +44,7 @@ function AddDeckView() {
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonSubmit]}
           textStyle={[styles.textCommon, styles.textSubmit]}
+          onPress={() => navigation.push("DeckDetailView")}
         >Submit</TextButton>
       </BottomView>
     </ContainerView>
