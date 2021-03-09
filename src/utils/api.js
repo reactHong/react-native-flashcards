@@ -28,6 +28,16 @@ export const getDecks = () => {
     });
 };
 
+export const deleteDeck = (id) => {
+  return AsyncStorage.getItem(STORAGE_KEY)
+    .then((data) => {
+      const decks = JSON.parse(data);
+      decks[id] = undefined;
+      delete decks[id];
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+    });
+};
+
 export const addCard = (id, newQuestion) => {
   return getDeck(id)
     .then((deck) => {

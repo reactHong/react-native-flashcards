@@ -1,4 +1,4 @@
-import { ADD_CARD, ADD_DECK } from "../actions/decks";
+import { ADD_CARD, ADD_DECK, DELETE_DECK } from "../actions/decks";
 import { RECEIVE_DATA } from "../actions/shared";
 
 const decks = (state = {}, action) => {
@@ -13,6 +13,12 @@ const decks = (state = {}, action) => {
       };
     case ADD_DECK:
       return;
+    case DELETE_DECK:
+      state[action.id] = undefined;
+      delete state[action.id];
+      return {
+        ...state,
+      };
     case RECEIVE_DATA:
       return action.decks;
     default:

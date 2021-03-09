@@ -43,9 +43,12 @@ const styles = StyleSheet.create({
   
 });
 
-const mapStateToProps = ({ decks }, { navigation }) => ({
-  decks,
-  navigation: navigation,
-});
+const mapStateToProps = ({ decks }, { navigation }) => {
+  console.log("[DeckListView.mapStateToProps] decks:", decks);
+  return {
+    decks,
+    navigation,
+  }
+};
 
 export default connect(mapStateToProps)(DeckListView);

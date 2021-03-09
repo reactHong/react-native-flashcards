@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import TextButton from './TextButton'
+import * as API from '../utils/api';
+import { confirmDelete } from '../utils/alert';
+import { deleteDeck } from '../actions/decks';
 
 const ContainerView = styled.View`
   flex: 1;
@@ -30,7 +33,19 @@ const BottomView = styled.View`
 
 function DeckDetailView(props) {
 
-  const { id, title, questionsCount, navigation } = props;
+  const { id, title, questionsCount, navigation, dispatch } = props;
+  
+  const handleDelete = () => {
+    const title = "Delete Deck";
+    const msg = "Do you really want to delete the deck?";
+    confirmDelete(title, msg, () => {
+      API.deleteDeck(id)
+      .then(() => {
+        dispatch(deleteDeck(id));
+        navigation.goBack();
+      });
+    });
+  };
 
   useEffect(() => {
     console.log("### [DeckDetailView.useEffect]");
@@ -64,12 +79,7 @@ function DeckDetailView(props) {
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonDelDeck]}
           textStyle={[styles.textCommon, styles.textDelDeck]}
-          onPress={() => {
-            //TODO: Delete the deck with id
-            
-
-            navigation.goBack();
-          }}
+          onPress={handleDelete}
         >Delete Deck</TextButton>
       </BottomView>
     </ContainerView>
@@ -115,10 +125,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, props) => {
 
-  const { route, navigation } = props;
+  console.log("[DeckDetailView.mapStateToProps] state:", state);
+  console.log("[DeckDetailView.mapStateToProps] props:", props);
+
+  const { route, navigation, dispatch } = props;
   const { id } = route.params;
   const deck = state.decks[id];
-  const { title, questions } = deck;
+  const { title, questions } = deck ? deck : { title: "", questions: [] };
 
   return {
     id, 
