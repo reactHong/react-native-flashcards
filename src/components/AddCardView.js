@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { addCard } from '../actions/decks';
 import TextButton from './TextButton';
 import TextInputComponent from './TextInputComponent';
+import * as API from '../utils/api';
 
 const ContainerView = styled.View`
   flex: 1;
@@ -46,18 +47,20 @@ function AddCardView(props) {
   });
   const { question, answer } = state;
   const { route, navigation } = props;
-  const { id, callback } = route.params;
+  const { id } = route.params;
 
   const handleChangeText = (text, name) => {
     dispatch({ name, text });
   };
 
   const handleSubmit = () => {
-    const questionCard = { question, answer };
-    
-    //TODO: Call API for updating AsyncStorage
-    props.dispatch(addCard(id, questionCard));
-    navigation.navigate("DeckDetailView");
+    const newQuestion = { question, answer };
+
+    API.addCard(id, newQuestion) 
+      .then(() => {
+        props.dispatch(addCard(id, newQuestion));
+        navigation.navigate("DeckDetailView");
+      });
   };
 
   useEffect(() => {
@@ -131,5 +134,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
 
 export default connect()(AddCardView);

@@ -9,15 +9,36 @@ const setDummyData = () => {
 };
 
 const formatDecksResult = (result) => {
-  console.log("[formatDecksResult] result:", result);
+  console.log("[formatDecksResult] result:", result ? JSON.parse(result) : null);
   return (result === null)
     ? setDummyData()
     : JSON.parse(result);
 };
 
+export const getDeck = (id) => {
+  return getDecks()
+    .then((decks) => decks[id]);
+};
+
 export const getDecks = () => {
   return AsyncStorage.getItem(STORAGE_KEY)
-    .then(formatDecksResult);
+    .then(formatDecksResult)
+    .catch(() => {
+      //TODO: Error Handling
+    });
+};
+
+export const addCard = (id, newQuestion) => {
+  return getDeck(id)
+    .then((deck) => {
+      deck.questions = deck.questions.concat(newQuestion);
+      return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({
+        [id]: deck,
+      }));
+    })
+    .catch(() => {
+      //TODO: Error Handling
+    });
 };
 
 // export function fetchCalendarResults () {
