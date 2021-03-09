@@ -1,12 +1,12 @@
 import React from 'react';
 import { TextInput } from 'react-native';
 
-function TextInputComponent({ onChangeText, ...props }) {
+function TextInputComponent({ StyledComponent, onChangeText, ...props }) {
 
   const { name } = props;
 
   return (
-    <TextInput 
+    <StyledComponent 
       {...props} 
       onChangeText={(text) => onChangeText(text, name)} 
     />

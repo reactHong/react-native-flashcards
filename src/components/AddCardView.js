@@ -75,15 +75,13 @@ function AddCardView(props) {
     <ContainerView>
       <TopView>
         <TextInputComponent 
-          component={StyledTextInput}
-          style={styles.textInput}
+          StyledComponent={StyledTextInput}
           value={question}
           name="question"
           placeholder="Enter the question" 
           onChangeText={handleChangeText}/>
         <TextInputComponent 
-          component={StyledTextInput}
-          style={styles.textInput}
+          StyledComponent={StyledTextInput}
           value={answer}
           name="answer"
           placeholder="Enter the answer" 
@@ -101,18 +99,6 @@ function AddCardView(props) {
 }
 
 const styles = StyleSheet.create({
-  textInput: {
-    height: 50,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'gray',
-    backgroundColor: 'white',
-    marginTop: 20,
-    marginBottom: 20,
-    fontSize: 30,
-    paddingLeft: 10,
-  },
   buttonCommon: {
     width: 280,
     height: 80,
