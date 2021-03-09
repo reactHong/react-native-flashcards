@@ -14,19 +14,26 @@ function DeckListView({ decks, navigation }) {
   
   const data = Object.entries(decks);
 
-  const renderItem = ({ item }) => (
-    <DeckView 
+  const renderItem = ({ item }) => {
+    const [id, value] = item;
+    const { title, questions } = value;
+
+    return (<DeckView 
       navigation={navigation} 
-      deck={item[1]}
-    />
-  );
+      id={id}
+      title={title}
+      questionsCount={questions.length}
+    />);
+  };
+
+  console.log("### [DeckListView.render]");
 
   return(
     <ListView>
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={item => item[0]}
+        keyExtractor={(item) => item[0]}
       />
     </ListView>
   );

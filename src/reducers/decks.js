@@ -1,7 +1,18 @@
+import { ADD_CARD, ADD_DECK } from "../actions/decks";
 import { RECEIVE_DATA } from "../actions/shared";
 
 const decks = (state = {}, action) => {
   switch (action.type) {
+    case ADD_CARD:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          questions: state[action.id].questions.concat(action.question),
+        }
+      };
+    case ADD_DECK:
+      return;
     case RECEIVE_DATA:
       return action.decks;
     default:

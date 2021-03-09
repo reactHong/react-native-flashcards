@@ -10,7 +10,8 @@ import DeckDetailView from './DeckDetailView';
 import AddCardView from './AddCardView';
 import AddDeckView from './AddDeckView';
 import QuizView from './QuizView';
-import { getDecks } from '../_DATA';
+// import { getDecks } from '../_DATA';
+import * as API from '../utils/api';
 import { receiveData } from '../actions/shared';
 
 const Tab = createBottomTabNavigator();
@@ -60,9 +61,9 @@ function Main(props) {
 
   useEffect(() => {
     console.log("### [Main.useEffect]");
-    getDecks()
+    API.getDecks()
       .then(decks => {
-        console.log("### [App.useEffect] decks:", decks);
+        // console.log("### [App.useEffect] decks:", decks);
         dispatch(receiveData(decks));
       });
   }, []);

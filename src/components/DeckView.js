@@ -18,14 +18,16 @@ const DetailText = styled.Text`
   text-align: center;
 `;
 
-function DeckView({ deck, navigation }) {
+function DeckView(props) {
 
-  const { title, questions } = deck;
-
+  const { id, title, questionsCount, navigation } = props;
+  
   return(
-    <ContainerView onPress={() => navigation.push('DeckDetailView')}>
+    <ContainerView onPress={() => navigation.push('DeckDetailView', { 
+      id,
+    })}>
       <TitleText>{title}</TitleText>
-      <DetailText>{questions.length} cards</DetailText>
+      <DetailText>{questionsCount} cards</DetailText>
     </ContainerView>
   );
 }

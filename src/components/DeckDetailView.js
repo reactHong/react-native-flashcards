@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import TextButton from './TextButton'
 
@@ -27,28 +28,46 @@ const BottomView = styled.View`
   align-items: center;
 `;
 
-function DeckDetailView({ navigation }) {
+function DeckDetailView(props) {
+
+  const { id, title, questionsCount, navigation } = props;
+
+  useEffect(() => {
+    console.log("### [DeckDetailView.useEffect]");
+    return () => {
+      console.log("### [DeckDetailView.useEffect] willUnmount");    
+    };
+  }, []);
+  console.log("### [DeckDetailView.render] props:", props);
+
   return (
     <ContainerView>
       <TopView>
-        <TitleText>Deck1</TitleText>
-        <DetailText>3 cards</DetailText>
+        <TitleText>{title}</TitleText>
+        <DetailText>{questionsCount} cards</DetailText>
       </TopView>
       <BottomView>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonAddCard]}
           textStyle={[styles.textCommon, styles.textAddCard]}
-          onPress={() => navigation.push("AddCardView")}
+          onPress={() => navigation.push("AddCardView", { 
+            id,
+          })}
         >Add Card</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonStartQuiz]}
           textStyle={[styles.textCommon, styles.textStartQuiz]}
-          onPress={() => navigation.push("QuizView")}
+          onPress={() => navigation.push("QuizView", { id, })}
         >Start Quiz</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonDelDeck]}
           textStyle={[styles.textCommon, styles.textDelDeck]}
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            //TODO: Delete the deck with id
+            
+
+            navigation.goBack();
+          }}
         >Delete Deck</TextButton>
       </BottomView>
     </ContainerView>
@@ -92,4 +111,19 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckDetailView;
+const mapStateToProps = (state, props) => {
+
+  const { route, navigation } = props;
+  const { id } = route.params;
+  const deck = state.decks[id];
+  const { title, questions } = deck;
+
+  return {
+    id, 
+    title,
+    questionsCount: questions.length,
+    navigation: navigation,
+  }
+};
+
+export default connect(mapStateToProps)(DeckDetailView);
