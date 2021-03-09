@@ -50,14 +50,16 @@ function DeckDetailView(props) {
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonAddCard]}
           textStyle={[styles.textCommon, styles.textAddCard]}
-          onPress={() => navigation.push("AddCardView", { 
-            id,
-          })}
+          onPress={() => navigation.push("AddCardView", { id })}
         >Add Card</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonStartQuiz]}
           textStyle={[styles.textCommon, styles.textStartQuiz]}
-          onPress={() => navigation.push("QuizView", { id, })}
+          onPress={() => navigation.push("QuizView", { 
+            id,
+            currentIndex: 0,
+            correctCount: 0,
+          })}
         >Start Quiz</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonDelDeck]}

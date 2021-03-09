@@ -23,9 +23,9 @@ function DeckView(props) {
   const { id, title, questionsCount, navigation } = props;
   
   return(
-    <ContainerView onPress={() => navigation.push('DeckDetailView', { 
-      id,
-    })}>
+    <ContainerView 
+      onPress={() => navigation.push('DeckDetailView', { id })}
+    >
       <TitleText>{title}</TitleText>
       <DetailText>{questionsCount} cards</DetailText>
     </ContainerView>

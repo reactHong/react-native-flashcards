@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import QuizFinishView from './QuizFinishView';
 import TextButton from './TextButton'
 
 const ContainerView = styled.View`
@@ -63,35 +65,69 @@ const ButtonsView = styled.View`
   flex-direction: row;
 `;
 
-function QuizView() {
+function QuizView(props) {
+
+  const [showAnswer, setShowAnswer] = useState(false);
+  const { 
+    id, 
+    currentIndex, 
+    totalCount, 
+    correctCount,
+    question, 
+    navigation, 
+    dispatch 
+  } = props;
+
+  const handleAnswer = (correct) => {
+    navigation.push("QuizView", {
+      id,
+      currentIndex: currentIndex + 1,
+      correctCount: (correct) ? correctCount+1 : correctCount,
+    });
+  };
+
+  if (currentIndex === totalCount) {
+    return <QuizFinishView 
+            correctCount={correctCount}
+            totalCount={totalCount} 
+            navigation={navigation}
+          />
+  }
 
   return (
     <ContainerView>
       <TopView>
-        <IndexText>Quiz 2 / 3</IndexText>
+        <IndexText>Quiz {currentIndex+1} / {totalCount}</IndexText>
         <CardView>
-          <QuestionText>What is the capital of Poland?</QuestionText>
+          <QuestionText>{question.question}</QuestionText>
         </CardView>
       </TopView>
       <BottomView>
-        <TextButton 
-          buttonStyle={[styles.buttonCommon, styles.buttonShowAnswer]}
-          textStyle={[styles.textCommon, styles.textShowAnswer]}
-        >Show Answer</TextButton>
-        {/* <TitleText>Answer</TitleText>
-        <AnswerView>
-          <AnswerText>Warsaw</AnswerText>
-        </AnswerView>  
-        <ButtonsView>
-          <TextButton 
-            buttonStyle={[styles.buttonCommon, styles.buttonCorrect]}
-            textStyle={[styles.textCommon, styles.textCorrect]}
-          >Correct</TextButton>
-          <TextButton 
-            buttonStyle={[styles.buttonCommon, styles.buttonIncorrect]}
-            textStyle={[styles.textCommon, styles.textIncorrect]}
-          >Incorrect</TextButton>
-        </ButtonsView> */}
+        {!showAnswer
+          ? <TextButton 
+              buttonStyle={[styles.buttonCommon, styles.buttonShowAnswer]}
+              textStyle={[styles.textCommon, styles.textShowAnswer]}
+              onPress={() => setShowAnswer(true)}
+            >Show Answer</TextButton>
+          : <>
+              <TitleText>Answer</TitleText>
+              <AnswerView>
+                <AnswerText>{question.answer}</AnswerText>
+              </AnswerView>  
+              <ButtonsView>
+                <TextButton 
+                  buttonStyle={[styles.buttonCommon, styles.buttonCorrect]}
+                  textStyle={[styles.textCommon, styles.textCorrect]}
+                  onPress={() => handleAnswer(true)}
+                >Correct</TextButton>
+                <TextButton 
+                  buttonStyle={[styles.buttonCommon, styles.buttonIncorrect]}
+                  textStyle={[styles.textCommon, styles.textIncorrect]}
+                  onPress={() => handleAnswer(false)}
+                >Incorrect</TextButton>
+              </ButtonsView>
+            </>
+        }
       </BottomView>
     </ContainerView>
   );
@@ -136,4 +172,23 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuizView;
+const mapStateToProps = (state, props) => {
+
+  const { route, navigation, dispatch } = props;
+  const { id, currentIndex, correctCount } = route.params;
+  const deck = state.decks[id];
+  const totalCount = deck.questions.length;
+  const question = deck.questions[currentIndex];
+
+  return {
+    id,
+    currentIndex,
+    totalCount,
+    correctCount,
+    question,
+    navigation,
+    dispatch,
+  };
+};
+
+export default connect(mapStateToProps)(QuizView);
