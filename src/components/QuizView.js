@@ -84,6 +84,7 @@ function QuizView(props) {
       currentIndex: currentIndex + 1,
       correctCount: (correct) ? correctCount+1 : correctCount,
     });
+    setShowAnswer(false);
   };
 
   if (currentIndex === totalCount) {
