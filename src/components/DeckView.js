@@ -26,7 +26,7 @@ function DeckView(props) {
     <ContainerView 
       onPress={() => navigation.push('DeckDetailView', { id })}
     >
-      <TitleText>{title}</TitleText>
+      <TitleText>{title} ({id})</TitleText>
       <DetailText>{questionsCount} cards</DetailText>
     </ContainerView>
   );

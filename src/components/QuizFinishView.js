@@ -50,7 +50,7 @@ function QuizFinishView(props) {
           buttonStyle={[styles.buttonCommon, styles.buttonMove]}
           textStyle={[styles.textCommon, styles.textMove]}
           onPress={() => navigation.pop(totalCount+1)}
-        >Move to the Deck</TextButton>
+        >Back to Deck</TextButton>
       </BottomView>
     </ContainerView>
   );
