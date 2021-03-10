@@ -4,14 +4,24 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import DeckView from './DeckView';
 
-const ListView = styled.View`
+const ContainerView = styled.View`
   width: 100%;
   height: 100%;
   background-color: yellow;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MainText = styled.Text`
+  font-size: 50px;
+  margin-bottom: 20px;
+`;
+const SubText = styled.Text`
+  font-size: 20px;
+  color: gray;
 `;
 
 function DeckListView({ decks, navigation }) {
-  
   const data = Object.entries(decks);
 
   const renderItem = ({ item }) => {
@@ -28,14 +38,18 @@ function DeckListView({ decks, navigation }) {
 
   console.log("### [DeckListView.render]");
 
-  return(
-    <ListView>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item[0]}
-      />
-    </ListView>
+  return ((data.length === 0)
+    ? <ContainerView>
+        <MainText>No Decks</MainText>
+        <SubText>Please add a new Deck on the bottom menu.</SubText>
+      </ContainerView>
+    : <ContainerView>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item[0]}
+        />
+      </ContainerView>
   );
 }
 
