@@ -53,20 +53,23 @@ function AddDeckView(props) {
   const handleChangeText = (text, name) => {
     dispatch({
       name,
-      text
+      text,
     });
   };
 
   const handleSubmit = () => {
-    const { navigation, dispatch } = props;
-
     API.addDeck(deckName)
       .then((newDeck) => {
         console.log("[handleSubmit] newDeck:", newDeck);
-        dispatch(addDeck(newDeck.id, newDeck.name));
-        navigation.push("DeckDetailView", { 
+        props.dispatch(addDeck(newDeck.id, newDeck.name));
+        props.navigation.push("DeckDetailView", { 
           id: newDeck.id,
         });
+        dispatch({
+          name: "deckName",
+          text: "",
+        });
+        
       })
       .catch(() => {
         //TODO: Error handling
