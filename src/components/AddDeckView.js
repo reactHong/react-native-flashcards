@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components';
-import TextButton from './TextButton'
+import TextButton from './TextButton';
+import TextInputComponent from './TextInputComponent';
+import * as API from '../utils/api';
+import { connect } from 'react-redux';
+import { addDeck } from '../actions/decks';
 
 const ContainerView = styled.View`
   flex: 1;
@@ -33,18 +37,59 @@ const BottomView = styled.View`
   align-items: center;
 `;
 
-function AddDeckView({ navigation }) {
+const reducer = (state = {}, action) => {
+  return {
+    ...state,
+    [action.name]: action.text,
+  };
+};
+
+function AddDeckView(props) {
+  const [state, dispatch] = useReducer(reducer, {
+    deckName: "",
+  });
+  const { deckName } = state;
+
+  const handleChangeText = (text, name) => {
+    dispatch({
+      name,
+      text
+    });
+  };
+
+  const handleSubmit = () => {
+    const { navigation, dispatch } = props;
+
+    API.addDeck(deckName)
+      .then((newDeck) => {
+        console.log("[handleSubmit] newDeck:", newDeck);
+        dispatch(addDeck(newDeck.id, newDeck.name));
+        navigation.push("DeckDetailView", { 
+          id: newDeck.id,
+        });
+      })
+      .catch(() => {
+        //TODO: Error handling
+      });
+  };
+
   return (
     <ContainerView>
       <TopView>
-        <TitleText>What is the tilte of your new deck?</TitleText>
-        <StyledTextInput placeholder="Enter the Title" />
+        <TitleText>What is the name of your new deck?</TitleText>
+        <TextInputComponent 
+          StyledComponent={StyledTextInput}
+          name="deckName"
+          value={deckName}
+          placeholder="Enter the name" 
+          onChangeText={handleChangeText}
+        />
       </TopView>
       <BottomView>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonSubmit]}
           textStyle={[styles.textCommon, styles.textSubmit]}
-          onPress={() => navigation.push("DeckDetailView")}
+          onPress={handleSubmit}
         >Submit</TextButton>
       </BottomView>
     </ContainerView>
@@ -74,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddDeckView;
+export default connect()(AddDeckView);

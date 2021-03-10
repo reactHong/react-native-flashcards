@@ -3,6 +3,10 @@ import { sampleDecks } from '../_DATA';
 
 const STORAGE_KEY = "FLASHCARDS:DECKS";
 
+function generateId() {
+  return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+}
+
 const setDummyData = () => {
   AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(sampleDecks));
   return sampleDecks;
@@ -26,6 +30,18 @@ export const getDecks = () => {
     .catch(() => {
       //TODO: Error Handling
     });
+};
+
+export const addDeck = (name) => {
+  const id = generateId();
+  const newDeck = {
+    [id]: {
+      title: name,
+      questions: [],
+    },
+  };
+  return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(newDeck))
+    .then(() => ({ id, name }));
 };
 
 export const deleteDeck = (id) => {

@@ -52,6 +52,14 @@ const Stack2 = () => {
         name="DeckDetailView" 
         component={DeckDetailView} 
       />
+      <DecksStack.Screen 
+        name="AddCardView" 
+        component={AddCardView} 
+      />
+      <DecksStack.Screen 
+        name="QuizView" 
+        component={QuizView} 
+      />
     </AddDeckStack.Navigator>
   );
 }

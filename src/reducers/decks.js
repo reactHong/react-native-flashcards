@@ -12,7 +12,13 @@ const decks = (state = {}, action) => {
         }
       };
     case ADD_DECK:
-      return;
+      return {
+        ...state,
+        [action.id]: {
+          title: action.name,
+          questions: [],
+        }
+      };
     case DELETE_DECK:
       state[action.id] = undefined;
       delete state[action.id];
