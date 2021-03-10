@@ -9,12 +9,12 @@ const ContainerView = styled.TouchableOpacity`
 `;
 
 const TitleText = styled.Text`
-  font-size: 25;
+  font-size: 25px;
   text-align: center;
 `;
 
 const DetailText = styled.Text`
-  font-size: 25;
+  font-size: 25px;
   text-align: center;
 `;
 

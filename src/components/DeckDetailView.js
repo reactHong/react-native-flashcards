@@ -17,12 +17,12 @@ const TopView = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 40;
+  font-size: 40px;
   text-align: center;
 `;
 
 const DetailText = styled.Text`
-  font-size: 30;
+  font-size: 30px;
   text-align: center;
 `;
 

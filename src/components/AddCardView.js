@@ -18,13 +18,13 @@ const TopView = styled.View`
 `;
 
 const StyledTextInput = styled.TextInput`
-  height: 50;
+  height: 50px;
   border: 1px solid gray;
   background-color: white;
   margin: 20px 0;
-  font-size: 30;
-  border-radius: 10;
-  padding-left: 10;
+  font-size: 30px;
+  border-radius: 10px;
+  padding-left: 10px;
 `;
 
 const BottomView = styled.View`

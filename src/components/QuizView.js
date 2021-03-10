@@ -16,7 +16,7 @@ const TopView = styled.View`
 `;
 
 const IndexText = styled.Text`
-  font-size: 30;
+  font-size: 30px;
   /* text-align: center; */
   margin-top: 20px;
   margin-left: 20px;
@@ -29,7 +29,7 @@ const CardView = styled.View`
 `;
 
 const QuestionText = styled.Text`
-  font-size: 40;
+  font-size: 40px;
   font-weight: bold;
   text-align: center;
 `;
@@ -42,7 +42,7 @@ const BottomView = styled.View`
 `;
 
 const TitleText = styled.Text`
-  font-size: 40;
+  font-size: 40px;
   font-weight: bold;
   text-align: center;
 `;
@@ -56,7 +56,7 @@ const AnswerView = styled.View`
 `;
 
 const AnswerText = styled.Text`
-  font-size: 30;
+  font-size: 30px;
   text-align: center;
 `;
 
