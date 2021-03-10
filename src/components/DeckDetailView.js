@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import TextButton from './TextButton'
@@ -35,6 +35,18 @@ function DeckDetailView(props) {
 
   const { id, title, questionsCount, navigation, dispatch } = props;
   
+  const handleStartQuiz = () => {
+    if (!questionsCount) {
+      Alert.alert("Start Quiz", "There is no cards.\nPlease add a card.");
+      return;
+    }
+    navigation.push("QuizView", { 
+      id,
+      currentIndex: 0,
+      correctCount: 0,
+    });
+  };
+
   const handleDelete = () => {
     const title = "Delete Deck";
     const msg = "Do you really want to delete the deck?";
@@ -70,11 +82,7 @@ function DeckDetailView(props) {
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonStartQuiz]}
           textStyle={[styles.textCommon, styles.textStartQuiz]}
-          onPress={() => navigation.push("QuizView", { 
-            id,
-            currentIndex: 0,
-            correctCount: 0,
-          })}
+          onPress={handleStartQuiz}
         >Start Quiz</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonDelDeck]}
