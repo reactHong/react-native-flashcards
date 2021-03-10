@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { addCard } from '../actions/decks';
@@ -54,8 +54,13 @@ function AddCardView(props) {
   };
 
   const handleSubmit = () => {
-    const newQuestion = { question, answer };
+    if (!question || !answer) {
+      const msg = (!question) ? "question" : "answer";
+      Alert.alert("Add Card", `Please enter the ${msg}!`);
+      return;
+    }
 
+    const newQuestion = { question, answer };
     API.addCard(id, newQuestion) 
       .then(() => {
         props.dispatch(addCard(id, newQuestion));

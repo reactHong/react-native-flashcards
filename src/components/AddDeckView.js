@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import styled from 'styled-components';
 import TextButton from './TextButton';
 import TextInputComponent from './TextInputComponent';
@@ -58,6 +58,11 @@ function AddDeckView(props) {
   };
 
   const handleSubmit = () => {
+    if (!deckName) {
+      Alert.alert("Add Deck", "Please enter the name of the new deck!");
+      return;
+    }
+
     API.addDeck(deckName)
       .then((newDeck) => {
         console.log("[handleSubmit] newDeck:", newDeck);
