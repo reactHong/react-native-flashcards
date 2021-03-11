@@ -1,5 +1,6 @@
-import React, { useEffect, useReducer } from 'react';
-import { Alert, StyleSheet } from 'react-native';
+import React, { useEffect, useReducer, useState } from 'react';
+import { Alert, StyleSheet, Platform, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { addCard } from '../actions/decks';
@@ -14,10 +15,12 @@ const ContainerView = styled.View`
 `;
 
 const TopView = styled.View`
-  /* background-color: yellowgreen; */
+  background-color: yellowgreen;
+  align-items: center;
 `;
 
 const StyledTextInput = styled.TextInput`
+  width: 100%;
   height: 50px;
   border: 1px solid gray;
   background-color: white;
@@ -25,6 +28,11 @@ const StyledTextInput = styled.TextInput`
   font-size: 30px;
   border-radius: 10px;
   padding-left: 10px;
+`;
+
+const StyledImage = styled.Image`
+  width: 200px;
+  height: 200px;
 `;
 
 const BottomView = styled.View`
@@ -40,7 +48,7 @@ const reducer = (state = {}, action) => {
 };
 
 function AddCardView(props) {
-
+  const [image, setImage] = useState(null);
   const [state, dispatch] = useReducer(reducer, {
     question: '',
     answer: '',
@@ -51,6 +59,21 @@ function AddCardView(props) {
 
   const handleChangeText = (text, name) => {
     dispatch({ name, text });
+  };
+
+  const handleLoadImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
   };
 
   const handleSubmit = () => {
@@ -70,6 +93,16 @@ function AddCardView(props) {
 
   useEffect(() => {
     console.log("### [AddCardView.useEffect]");
+
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+
     return () => {
       console.log("### [AddCardView.useEffect] willUnmount");
     };
@@ -91,6 +124,12 @@ function AddCardView(props) {
           name="answer"
           placeholder="Enter the answer" 
           onChangeText={handleChangeText}/>
+        {image && <StyledImage source={{ uri: image }} />}
+        <TextButton 
+          buttonStyle={[styles.buttonCommon, styles.buttonLoad]}
+          textStyle={[styles.textCommon, styles.textLoad]}
+          onPress={handleLoadImage}
+        >Load Image for Hint</TextButton>
       </TopView>
       <BottomView>
         <TextButton 
@@ -117,6 +156,16 @@ const styles = StyleSheet.create({
   },
   textCommon: {
     fontSize: 30,
+  },
+  buttonLoad: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    width: 200,
+    height: 50,
+  },
+  textLoad: {
+    color: 'blue',
+    fontSize: 15,
   },
   buttonSubmit: {
     backgroundColor: 'purple',
