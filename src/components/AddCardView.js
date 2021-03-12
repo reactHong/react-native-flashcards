@@ -49,7 +49,7 @@ const reducer = (state = {}, action) => {
 };
 
 function AddCardView(props) {
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
   const [state, dispatch] = useReducer(reducer, {
     question: '',
     answer: '',
@@ -62,20 +62,20 @@ function AddCardView(props) {
     dispatch({ name, text });
   };
 
-  const handleLoadImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  // const handleLoadImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
 
-    console.log(result);
+  //   console.log(result);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
+  //   if (!result.cancelled) {
+  //     setImage(result.uri);
+  //   }
+  // };
 
   const handleSubmit = () => {
     if (!question || !answer) {
@@ -95,14 +95,14 @@ function AddCardView(props) {
   useEffect(() => {
     console.log("### [AddCardView.useEffect]");
 
-    (async () => {
-      if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
-        }
-      }
-    })();
+    // (async () => {
+    //   if (Platform.OS !== 'web') {
+    //     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    //     if (status !== 'granted') {
+    //       alert('Sorry, we need camera roll permissions to make this work!');
+    //     }
+    //   }
+    // })();
 
     return () => {
       console.log("### [AddCardView.useEffect] willUnmount");
