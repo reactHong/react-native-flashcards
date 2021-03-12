@@ -2,80 +2,81 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Animated, Easing, View } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import reducers from '../reducers';
 import QuizFinishView from './QuizFinishView';
-import TextButton from './TextButton'
+import TextButton from './TextButton';
+import { normalize } from '../utils/normalize';
 
 const ContainerView = styled.View`
+  background-color: white;
   flex: 1;
-  justify-content: space-around;
+`;
+const TopView = styled.View`
+  /* background-color: green; */
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+`;
+const BottomView = styled.View`
+  /* background-color: yellow; */
+  height: 20%;
+  justify-content: center;
+  align-items: center;
 `;
 
 // Top
-const TopView = styled.View`
-  background-color: green;
+const TitleView = styled.View`
+  /* background-color: brown; */
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 10px;
 `;
-
-const IndexText = styled.Text`
-  background-color: yellow;
-  font-size: 30px;
-  /* text-align: center; */
-  margin-top: 20px;
-  margin-left: 20px;
-`;
-
 const CardContainer = styled.View`
+  /* background-color: white; */
+  width: 100%;
+  justify-content: center;
   align-items: center;
+  margin: 10px;
 `;
-
-const CardView = styled.View`
+const ButtonView = styled.View`
+  /* background-color: brown; */
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+`;
+const IndexText = styled.Text`
+  /* background-color: yellow; */
+  font-size: 30px;
+  margin-left: 40px;
+`;
+const FlipCardView = styled.View`
   background-color: yellowgreen;
-  height: 500px;
-  justify-content: center;
-  margin: 20px;
-  /* padding: 30px; */
-  
-`;
-
-const QuestionText = styled.Text`
-  font-size: 40px;
-  /* font-weight: bold; */
-  text-align: center;
-`;
-
-// Bottom
-const BottomView = styled.View`
-  background-color: yellow;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TitleText = styled.Text`
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const AnswerView = styled.View`
-  background-color: orange;
   width: 90%;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 10px;
+  height: 300px;  /* TODO: height should be changed on iPad */
+  justify-content: center;
+  backface-visibility: hidden;
+  padding: 10px;
+  border-radius: 30px;
 `;
-
+const QuestionText = styled.Text`
+  font-size: 30px;
+  text-align: center;
+`;
 const AnswerText = styled.Text`
   font-size: 40px;
   text-align: center;
 `;
 
+// Bottom
 const ButtonsView = styled.View`
-  margin-top: 15%;
+  /* margin-top: 15%; */
   flex-direction: row;
+  align-items: center;
 `;
 
 function QuizView(props) {
-  // const [showAnswer, setShowAnswer] = useState(false);
+  const [isFliped, setIsFliped] = useState(false);
   const { 
     id, 
     currentIndex, 
@@ -100,7 +101,6 @@ function QuizView(props) {
       currentIndex: currentIndex + 1,
       correctCount: (correct) ? correctCount+1 : correctCount,
     });
-    // setShowAnswer(false);
   };
 
   const translation = useRef(new Animated.Value(0)).current;
@@ -115,21 +115,8 @@ function QuizView(props) {
       easing: Easing.bounce,
       useNativeDriver: true,
     }).start();
-    // Animated.spring(translation, { 
-    //   toValue: 100, 
-    //   // duration: 1000,
-    //   delay: 250,
-    //   tension: 40,
-    //   friction: 4,
-    //   useNativeDriver: true,
-    // }).start();
-    // Animated.sequence([
-    //   Animated.timing(bounceValue, { duration: 1000, toValue: 1.04 }),
-    //   Animated.spring(bounceValue, { toValue: 1, friction: 4 }),
-    // ]).start();
   };
 
-  let isFliped = false;
   const rotation = useRef(new Animated.Value(0)).current;
   const frontInterpolRotY = rotation.interpolate({
     inputRange: [0, 180, 360],
@@ -141,11 +128,11 @@ function QuizView(props) {
   });
   const flipCard = () => {
     Animated.timing(rotation, {
-      toValue: showAnswer ? 360: 180,
+      toValue: isFliped ? 360: 180,
       duration: 1000,
       useNativeDriver: true,
     }).start();
-    isFliped = !isFliped;
+    setIsFliped(!isFliped);
   };
 
   useEffect(() => {
@@ -160,11 +147,13 @@ function QuizView(props) {
   return (
     <ContainerView>
       <TopView>
-        <IndexText>Quiz {currentIndex+1} / {totalCount}</IndexText>
+        <TitleView>
+          <IndexText>Quiz {currentIndex+1} / {totalCount}</IndexText>
+        </TitleView>
         <CardContainer>
-          <CardView
+          <FlipCardView
             as={Animated.View}
-            style={[styles.flipCard, {
+            style={[{
               transform: [
                 { translateY: interpolTransY },
                 { rotateY: frontInterpolRotY }
@@ -172,26 +161,28 @@ function QuizView(props) {
             }]}
           >
             <QuestionText>{question.question}</QuestionText>
-          </CardView>
-          <CardView
+          </FlipCardView>
+          <FlipCardView
             as={Animated.View}
-            style={[styles.flipCard, styles.flipCardBack, {
+            style={[styles.flipCardBack, {
               transform: [
                 { rotateY: backInterpolRotY }
               ],
             }]}
           >
             <AnswerText>{question.answer}</AnswerText>
-          </CardView>
+          </FlipCardView>
         </CardContainer>
+        <ButtonView>
+          <TextButton 
+            buttonStyle={[styles.buttonShowAnswer]}
+            textStyle={[styles.textShowAnswer]}
+            onPress={flipCard}
+          >Show {isFliped ? "Question" : "Answer"}</TextButton>
+        </ButtonView>
       </TopView>
       <BottomView>
-        <TextButton 
-          buttonStyle={[styles.buttonCommon, styles.buttonShowAnswer]}
-          textStyle={[styles.textCommon, styles.textShowAnswer]}
-          onPress={flipCard}
-        >Show Answer</TextButton>      
-        {/* <ButtonsView>
+        <ButtonsView>
           <TextButton 
             buttonStyle={[styles.buttonCommon, styles.buttonCorrect]}
             textStyle={[styles.textCommon, styles.textCorrect]}
@@ -202,26 +193,35 @@ function QuizView(props) {
             textStyle={[styles.textCommon, styles.textIncorrect]}
             onPress={() => handleAnswer(false)}
           >Incorrect</TextButton>
-        </ButtonsView> */}
+        </ButtonsView>
       </BottomView>
     </ContainerView>
   );
 }
 
 const styles = StyleSheet.create({
-  flipCard: {
-    width: '90%',
-    backfaceVisibility: 'hidden',
-  },
   flipCardBack: {
     backgroundColor: 'red',
     opacity: 0.5,
     position: 'absolute',
     top: 0,
   },
+  buttonShowAnswer: {
+    backgroundColor: 'white',
+    width: '40%',
+    height: normalize(30),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  textShowAnswer: {
+    fontSize: normalize(10),
+    color: 'blue',
+  },
   buttonCommon: {
     width: '35%',
-    height: '50%',
+    height: '80%',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 10,
@@ -230,17 +230,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   textCommon: {
-    fontSize: 30,
-  },
-  buttonShowAnswer: {
-    backgroundColor: 'white',
-    width: '50%',
-    height: '30%',
-    borderRadius: 20,
-    borderWidth: 1,
-  },
-  textShowAnswer: {
-    fontSize: 25,
+    fontSize: normalize(15),
+    fontWeight: 'bold',
   },
   buttonCorrect: {
     backgroundColor: 'green', 
