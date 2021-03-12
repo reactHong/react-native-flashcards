@@ -66,7 +66,7 @@ const QuestionText = styled.Text`
   text-align: center;
 `;
 const AnswerText = styled.Text`
-  font-size: 40px;
+  font-size: 30px;
   text-align: center;
 `;
 
@@ -203,8 +203,8 @@ function QuizView(props) {
 
 const styles = StyleSheet.create({
   flipCardBack: {
-    backgroundColor: 'red',
-    opacity: 0.5,
+    backgroundColor: 'yellow',
+    // opacity: 0.5,
     position: 'absolute',
     top: 0,
   },

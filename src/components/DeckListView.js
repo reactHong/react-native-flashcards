@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import DeckView from './DeckView';
 
 const ContainerView = styled.View`
+  /* background-color: yellow; */
   width: 100%;
   height: 100%;
-  background-color: yellow;
   justify-content: center;
   align-items: center;
 `;
@@ -45,6 +45,7 @@ function DeckListView({ decks, navigation }) {
       </ContainerView>
     : <ContainerView>
         <FlatList
+          style={[styles.list]}
           data={data}
           renderItem={renderItem}
           keyExtractor={(item) => item[0]}
@@ -54,7 +55,9 @@ function DeckListView({ decks, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  
+  list: {
+    width: '100%',
+  }
 });
 
 const mapStateToProps = ({ decks }, { navigation }) => {

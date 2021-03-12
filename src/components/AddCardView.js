@@ -16,7 +16,7 @@ const ContainerView = styled.View`
 `;
 
 const TopView = styled.View`
-  background-color: yellowgreen;
+  /* background-color: yellowgreen; */
   align-items: center;
 `;
 
