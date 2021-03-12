@@ -17,7 +17,6 @@ function Main(props) {
   const { dispatch } = props;
 
   useEffect(() => {
-    console.log("### [Main.useEffect]");
     API.getDecks()
       .then(decks => {
         dispatch(receiveData(decks));
@@ -26,8 +25,6 @@ function Main(props) {
         //TODO: Error handling
       });
   }, []);
-
-  console.log("### [Main.render]");
 
   return (
     <SafeAreaView style={styles.container}>

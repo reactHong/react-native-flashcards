@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -17,7 +17,7 @@ const ContainerView = styled.View`
 `;
 
 const TopView = styled.View`
-  /* background-color: yellowgreen; */
+
 `;
 
 const TitleText = styled.Text`
@@ -31,7 +31,6 @@ const DetailText = styled.Text`
 `;
 
 const BottomView = styled.View`
-  /* background-color: yellow; */
   align-items: center;
 `;
 
@@ -62,14 +61,6 @@ function DeckDetailView(props) {
       });
     });
   };
-
-  useEffect(() => {
-    console.log("### [DeckDetailView.useEffect]");
-    return () => {
-      console.log("### [DeckDetailView.useEffect] willUnmount");    
-    };
-  }, []);
-  console.log("### [DeckDetailView.render] props:", props);
 
   return (
     <ContainerView>
@@ -136,10 +127,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, props) => {
-
-  console.log("[DeckDetailView.mapStateToProps] state:", state);
-  console.log("[DeckDetailView.mapStateToProps] props:", props);
-
   const { route, navigation, dispatch } = props;
   const { id } = route.params;
   const deck = state.decks[id];

@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { createStore } from 'redux';
@@ -51,7 +50,7 @@ const registerForPushNotificationsAsync = async () => {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    // console.log(token);
   } else {
     alert('Must use physical device for Push Notifications');
   }
@@ -69,8 +68,6 @@ const registerForPushNotificationsAsync = async () => {
 };
 
 export default function App() {
-  console.log("### [App.render]");
-
   const [pushToken, setPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();

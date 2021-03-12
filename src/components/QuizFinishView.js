@@ -9,7 +9,6 @@ const ContainerView = styled.View`
 `;
 
 const TopView = styled.View`
-  /* background-color: yellowgreen; */
 `;
 
 const TitleText = styled.Text`
@@ -25,12 +24,10 @@ const DetailText = styled.Text`
 `;
 
 const BottomView = styled.View`
-  /* background-color: yellow; */
   align-items: center;
 `;
 
 function QuizFinishView(props) {
-
   const { correctCount, totalCount, navigation } = props;
 
   return (

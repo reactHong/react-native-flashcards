@@ -13,7 +13,7 @@ const setDummyData = () => {
 };
 
 const formatDecksResult = (result) => {
-  console.log("[formatDecksResult] result:", result ? JSON.parse(result) : null);
+  // console.log("[formatDecksResult] result:", result ? JSON.parse(result) : null);
   return (result === null)
     ? setDummyData()
     : JSON.parse(result);
@@ -67,23 +67,3 @@ export const addCard = (id, newQuestion) => {
     });
 };
 
-// export function fetchCalendarResults () {
-//   return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-//     .then(formatCalendarResults)
-// }
-
-// export function submitEntry ({ entry, key }) {
-//   return AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
-//     [key]: entry
-//   }))
-// }
-
-// export function removeEntry (key) {
-//   return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-//     .then((results) => {
-//       const data = JSON.parse(results)
-//       data[key] = undefined
-//       delete data[key]
-//       AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data))
-//     })
-// }

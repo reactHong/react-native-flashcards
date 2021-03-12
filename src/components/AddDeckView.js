@@ -13,7 +13,6 @@ const ContainerView = styled.View`
 `;
 
 const TopView = styled.View`
-  /* background-color: yellowgreen; */
   padding: 50px;
 `;
 
@@ -33,7 +32,6 @@ const StyledTextInput = styled.TextInput`
 `;
 
 const BottomView = styled.View`
-  /* background-color: yellow; */
   align-items: center;
 `;
 
@@ -65,7 +63,6 @@ function AddDeckView(props) {
 
     API.addDeck(deckName)
       .then((newDeck) => {
-        console.log("[handleSubmit] newDeck:", newDeck);
         props.dispatch(addDeck(newDeck.id, newDeck.name));
         props.navigation.push("DeckDetailView", { 
           id: newDeck.id,

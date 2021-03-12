@@ -62,6 +62,7 @@ function AddCardView(props) {
     dispatch({ name, text });
   };
 
+  //TODO: Add loading image feature
   // const handleLoadImage = async () => {
   //   let result = await ImagePicker.launchImageLibraryAsync({
   //     mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -93,8 +94,6 @@ function AddCardView(props) {
   };
 
   useEffect(() => {
-    console.log("### [AddCardView.useEffect]");
-
     // (async () => {
     //   if (Platform.OS !== 'web') {
     //     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -102,13 +101,8 @@ function AddCardView(props) {
     //       alert('Sorry, we need camera roll permissions to make this work!');
     //     }
     //   }
-    // })();
-
-    return () => {
-      console.log("### [AddCardView.useEffect] willUnmount");
-    };
+    // })();    
   }, []);
-  console.log("### [AddCardView.render]");
 
   return (
     <ContainerView>

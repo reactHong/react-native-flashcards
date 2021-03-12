@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import DeckView from './DeckView';
 
 const ContainerView = styled.View`
-  /* background-color: yellow; */
   width: 100%;
   height: 100%;
   justify-content: center;
@@ -36,8 +35,6 @@ function DeckListView({ decks, navigation }) {
     />);
   };
 
-  console.log("### [DeckListView.render]");
-
   return ((data.length === 0)
     ? <ContainerView>
         <MainText>No Decks</MainText>
@@ -61,7 +58,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = ({ decks }, { navigation }) => {
-  console.log("[DeckListView.mapStateToProps] decks:", decks);
   return {
     decks,
     navigation,

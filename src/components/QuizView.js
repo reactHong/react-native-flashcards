@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Animated, Easing, View } from 'react-native';
+import { StyleSheet, Animated, Easing } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import QuizFinishView from './QuizFinishView';
@@ -13,13 +13,11 @@ const ContainerView = styled.View`
   flex: 1;
 `;
 const TopView = styled.View`
-  /* background-color: green; */
   height: 80%;
   justify-content: center;
   align-items: center;
 `;
 const BottomView = styled.View`
-  /* background-color: yellow; */
   height: 20%;
   justify-content: center;
   align-items: center;
@@ -27,28 +25,24 @@ const BottomView = styled.View`
 
 // Top
 const TitleView = styled.View`
-  /* background-color: brown; */
   width: 100%;
   justify-content: center;
   align-items: flex-start;
   margin: 10px;
 `;
 const CardContainer = styled.View`
-  /* background-color: white; */
   width: 100%;
   justify-content: center;
   align-items: center;
   margin: 10px;
 `;
 const ButtonView = styled.View`
-  /* background-color: brown; */
   width: 100%;
   justify-content: center;
   align-items: center;
   margin: 10px;
 `;
 const IndexText = styled.Text`
-  /* background-color: yellow; */
   font-size: 30px;
   margin-left: 40px;
 `;
@@ -72,7 +66,6 @@ const AnswerText = styled.Text`
 
 // Bottom
 const ButtonsView = styled.View`
-  /* margin-top: 15%; */
   flex-direction: row;
   align-items: center;
 `;
@@ -86,7 +79,6 @@ function QuizView(props) {
     correctCount,
     question, 
     navigation, 
-    dispatch 
   } = props;
 
   if (currentIndex === totalCount) {
@@ -251,7 +243,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state, props) => {
-
   const { route, navigation, dispatch } = props;
   const { id, currentIndex, correctCount } = route.params;
   const deck = state.decks[id];
