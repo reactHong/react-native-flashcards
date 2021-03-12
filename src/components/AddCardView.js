@@ -124,12 +124,13 @@ function AddCardView(props) {
           name="answer"
           placeholder="Enter the answer" 
           onChangeText={handleChangeText}/>
-        {image && <StyledImage source={{ uri: image }} />}
+        {/* TODO:  */}
+        {/* {image && <StyledImage source={{ uri: image }} />}
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonLoad]}
           textStyle={[styles.textCommon, styles.textLoad]}
           onPress={handleLoadImage}
-        >Load Image for Hint</TextButton>
+        >Load Image for Hint</TextButton> */}
       </TopView>
       <BottomView>
         <TextButton 
