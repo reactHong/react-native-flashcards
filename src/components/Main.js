@@ -3,66 +3,15 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack';
-import DeckListView from './DeckListView';
 import DeckDetailView from './DeckDetailView';
 import AddCardView from './AddCardView';
-import AddDeckView from './AddDeckView';
 import QuizView from './QuizView';
-// import { getDecks } from '../_DATA';
+import MainTab from './MainTab';
 import * as API from '../utils/api';
 import { receiveData } from '../actions/shared';
 
-const Tab = createBottomTabNavigator();
-const DecksStack = createStackNavigator();
-const AddDeckStack = createStackNavigator();
-
-const Stack1 = () => {
-  return (
-    <DecksStack.Navigator>
-      <DecksStack.Screen 
-        name="DeckListView" 
-        component={DeckListView} 
-      />
-      <DecksStack.Screen 
-        name="DeckDetailView" 
-        component={DeckDetailView} 
-      />
-      <DecksStack.Screen 
-        name="AddCardView" 
-        component={AddCardView} 
-      />
-      <DecksStack.Screen 
-        name="QuizView" 
-        component={QuizView} 
-      />
-    </DecksStack.Navigator>
-  );
-}
-
-const Stack2 = () => {
-  return (
-    <AddDeckStack.Navigator>
-      <AddDeckStack.Screen 
-        name="AddDeckView" 
-        component={AddDeckView} 
-      />
-      <DecksStack.Screen 
-        name="DeckDetailView" 
-        component={DeckDetailView} 
-      />
-      <DecksStack.Screen 
-        name="AddCardView" 
-        component={AddCardView} 
-      />
-      <DecksStack.Screen 
-        name="QuizView" 
-        component={QuizView} 
-      />
-    </AddDeckStack.Navigator>
-  );
-}
+const MainStack = createStackNavigator();
 
 function Main(props) {
   const { dispatch } = props;
@@ -71,8 +20,10 @@ function Main(props) {
     console.log("### [Main.useEffect]");
     API.getDecks()
       .then(decks => {
-        // console.log("### [App.useEffect] decks:", decks);
         dispatch(receiveData(decks));
+      })
+      .catch(() => {
+        //TODO: Error handling
       });
   }, []);
 
@@ -81,10 +32,24 @@ function Main(props) {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Decks" component={Stack1} />
-          <Tab.Screen name="Add Deck" component={Stack2} />
-        </Tab.Navigator>
+        <MainStack.Navigator>
+          <MainStack.Screen
+            name="Tab"
+            component={MainTab}
+          />
+          <MainStack.Screen 
+            name="DeckDetailView" 
+            component={DeckDetailView} 
+          />
+          <MainStack.Screen 
+            name="AddCardView" 
+            component={AddCardView} 
+          />
+          <MainStack.Screen 
+            name="QuizView" 
+            component={QuizView} 
+          />
+        </MainStack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
   );
