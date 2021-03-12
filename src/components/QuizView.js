@@ -6,6 +6,8 @@ import QuizFinishView from './QuizFinishView';
 import TextButton from './TextButton';
 import { normalize } from '../utils/normalize';
 
+export const QUIZ_VIEW_TITLE = "Quiz";
+
 const ContainerView = styled.View`
   background-color: white;
   flex: 1;
@@ -96,7 +98,7 @@ function QuizView(props) {
   }
 
   const handleAnswer = (correct) => {
-    navigation.push("QuizView", {
+    navigation.push(QUIZ_VIEW_TITLE, {
       id,
       currentIndex: currentIndex + 1,
       correctCount: (correct) ? correctCount+1 : correctCount,

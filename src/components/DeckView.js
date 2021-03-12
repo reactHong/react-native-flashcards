@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { DECKDETAIL_VIEW_TITLE } from './DeckDetailView';
 
 const ContainerView = styled.TouchableOpacity`
   background-color: yellowgreen;
@@ -24,13 +25,12 @@ function DeckView(props) {
   
   return(
     <ContainerView 
-      onPress={() => navigation.push('DeckDetailView', { id })}
+      onPress={() => navigation.push(DECKDETAIL_VIEW_TITLE, { id })}
     >
-      <TitleText>{title} ({id})</TitleText>
+      <TitleText>{title}</TitleText>
       <DetailText>{questionsCount} cards</DetailText>
     </ContainerView>
   );
 }
-
 
 export default DeckView;

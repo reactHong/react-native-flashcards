@@ -7,6 +7,7 @@ import { addCard } from '../actions/decks';
 import TextButton from './TextButton';
 import TextInputComponent from './TextInputComponent';
 import * as API from '../utils/api';
+import { DECKDETAIL_VIEW_TITLE } from './DeckDetailView';
 
 const ContainerView = styled.View`
   flex: 1;
@@ -87,7 +88,7 @@ function AddCardView(props) {
     API.addCard(id, newQuestion) 
       .then(() => {
         props.dispatch(addCard(id, newQuestion));
-        navigation.navigate("DeckDetailView");
+        navigation.navigate(DECKDETAIL_VIEW_TITLE);
       });
   };
 
@@ -176,5 +177,5 @@ const styles = StyleSheet.create({
   },
 });
 
-
+export const ADDCARD_VIEW_TITLE = "Add Card";
 export default connect()(AddCardView);

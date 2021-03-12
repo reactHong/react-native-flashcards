@@ -6,6 +6,10 @@ import TextButton from './TextButton'
 import * as API from '../utils/api';
 import { confirmDelete } from '../utils/alert';
 import { deleteDeck } from '../actions/decks';
+import { QUIZ_VIEW_TITLE } from './QuizView';
+import { ADDCARD_VIEW_TITLE } from './AddCardView';
+
+export const DECKDETAIL_VIEW_TITLE = "Deck Detail";
 
 const ContainerView = styled.View`
   flex: 1;
@@ -40,7 +44,7 @@ function DeckDetailView(props) {
       Alert.alert("Start Quiz", "There is no cards.\nPlease add a card.");
       return;
     }
-    navigation.push("QuizView", { 
+    navigation.push(QUIZ_VIEW_TITLE, { 
       id,
       currentIndex: 0,
       correctCount: 0,
@@ -77,7 +81,7 @@ function DeckDetailView(props) {
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonAddCard]}
           textStyle={[styles.textCommon, styles.textAddCard]}
-          onPress={() => navigation.push("AddCardView", { id })}
+          onPress={() => navigation.push(ADDCARD_VIEW_TITLE, { id })}
         >Add Card</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonStartQuiz]}

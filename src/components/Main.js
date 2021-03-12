@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import DeckDetailView from './DeckDetailView';
-import AddCardView from './AddCardView';
-import QuizView from './QuizView';
+import DeckDetailView, { DECKDETAIL_VIEW_TITLE } from './DeckDetailView';
+import AddCardView, { ADDCARD_VIEW_TITLE } from './AddCardView';
+import QuizView, { QUIZ_VIEW_TITLE } from './QuizView';
 import MainTab from './MainTab';
 import * as API from '../utils/api';
 import { receiveData } from '../actions/shared';
@@ -31,22 +31,23 @@ function Main(props) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar />
       <NavigationContainer>
         <MainStack.Navigator>
           <MainStack.Screen
-            name="Tab"
+            name="Flash Cards"
             component={MainTab}
           />
           <MainStack.Screen 
-            name="DeckDetailView" 
+            name={DECKDETAIL_VIEW_TITLE}
             component={DeckDetailView} 
           />
           <MainStack.Screen 
-            name="AddCardView" 
+            name={ADDCARD_VIEW_TITLE}
             component={AddCardView} 
           />
           <MainStack.Screen 
-            name="QuizView" 
+            name={QUIZ_VIEW_TITLE}
             component={QuizView} 
           />
         </MainStack.Navigator>
