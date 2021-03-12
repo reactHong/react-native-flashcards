@@ -1,13 +1,14 @@
 import React from 'react';
-import { Text, TouchableHighlight } from "react-native";
+import { Text, TouchableHighlight, TouchableOpacity } from "react-native";
+import {  } from 'react-native-gesture-handler';
 
 function TextButton({ children, buttonStyle, textStyle, onPress }) {
   return (
-    <TouchableHighlight 
+    <TouchableOpacity 
       style={buttonStyle}
       onPress={onPress}>
       <Text style={textStyle}>{children}</Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 
