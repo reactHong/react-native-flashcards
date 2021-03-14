@@ -8,7 +8,6 @@ This is a simple study application with flashcards.
 ## Contents
 
 - [App Preview](#app-preview)
-- [Implementation](#implementation)
 - [Run the application](#run-the-application)
 - [Features](#features)
 - [Further TO DO LIST](#further-to-do-list)
