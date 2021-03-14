@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native'
 import { sampleDecks } from '../_DATA';
 
 const STORAGE_KEY = "FLASHCARDS:DECKS";
+const NOTIFICATION_KEY = "FLASHCARDS:NOTIFICATION";
 
 function generateId() {
   return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
@@ -67,3 +68,17 @@ export const addCard = (id, newQuestion) => {
     });
 };
 
+export const getNotification = async () => {
+  return AsyncStorage.getItem(NOTIFICATION_KEY).then(JSON.parse);
+};
+
+export const setNotification = async (identifier, tomorrowDate) => {
+  return AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify({
+    identifier,
+    tomorrowDate: tomorrowDate ? tomorrowDate : null,
+  }))
+};
+
+export const removeNotification = async () => {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY);
+};

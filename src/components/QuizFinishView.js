@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components';
+import { schedulePushNotification } from '../utils/notification';
 import TextButton from './TextButton'
 
 const ContainerView = styled.View`
@@ -30,6 +31,11 @@ const BottomView = styled.View`
 function QuizFinishView(props) {
   const { correctCount, totalCount, navigation } = props;
 
+  useEffect(() => {
+    //NOTE: Notification would be reset if even one quiz is finished.
+    schedulePushNotification(true);
+  }, []);
+
   return (
     <ContainerView>
       <TopView>
@@ -42,7 +48,7 @@ function QuizFinishView(props) {
           buttonStyle={[styles.buttonCommon, styles.buttonRetake]}
           textStyle={[styles.textCommon, styles.textRetake]}
           onPress={() => navigation.pop(totalCount)}
-        >Retake</TextButton>
+        >Restart Quiz</TextButton>
         <TextButton 
           buttonStyle={[styles.buttonCommon, styles.buttonMove]}
           textStyle={[styles.textCommon, styles.textMove]}
