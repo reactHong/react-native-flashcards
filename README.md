@@ -9,10 +9,11 @@ This is a simple study application with flashcards.
 
 - [App Preview](#app-preview)
 - [Implementation](#implementation)
-- [Additional installed npm list](#additional-installed-npm-list)
 - [Run the application](#run-the-application)
+- [Features](#features)
+- [Further TO DO LIST](#further-to-do-list)
 - [Create React Native App](#create-react-native-app)
-
+- [Additional Dependencies](#additional-dependencies)
 
 ## App Preview
 
